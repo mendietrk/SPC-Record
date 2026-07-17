@@ -1,0 +1,280 @@
+<!DOCTYPE html>
+<html lang="es">
+
+<head>
+
+<meta charset="UTF-8">
+
+<title>Generador de Reportes SPC</title>
+
+<style>
+
+*{
+    margin:0;
+    padding:0;
+    box-sizing:border-box;
+}
+
+body{
+
+    font-family:Arial,Helvetica,sans-serif;
+    background:#ececec;
+    display:flex;
+    justify-content:center;
+    align-items:center;
+    height:100vh;
+
+}
+
+.card{
+
+    background:white;
+    width:700px;
+    padding:60px;
+    border-radius:15px;
+    box-shadow:0 0 30px rgba(0,0,0,.25);
+    text-align:center;
+
+}
+
+h1{
+
+    margin-bottom:45px;
+
+}
+
+#btnReporte{
+
+    background:#4b93eb;
+    color:white;
+    font-size:34px;
+    border:none;
+    border-radius:15px;
+    padding:30px 70px;
+    cursor:pointer;
+    transition:.25s;
+    font-weight:bold;
+
+}
+
+#btnReporte:hover{
+
+    background:#114f99;
+    transform:scale(1.03);
+
+}
+
+#btnReporte:disabled{
+
+    background:#555;
+    cursor:not-allowed;
+
+}
+
+/*********************/
+/* MATRIX */
+/*********************/
+
+#spinner{
+
+    display:none;
+    position:fixed;
+    inset:0;
+    background:black;
+    overflow:hidden;
+    justify-content:center;
+    align-items:center;
+    flex-direction:column;
+    z-index:99999;
+
+}
+
+#matrix{
+
+    position:absolute;
+    inset:0;
+    overflow:hidden;
+    opacity:.25;
+    font-family:Consolas,monospace;
+    color:#00ff00;
+    font-size:20px;
+    line-height:20px;
+    white-space:pre;
+    pointer-events:none;
+
+}
+
+#icono{
+
+    font-size:110px;
+    color:#00ff00;
+    z-index:10;
+    filter:drop-shadow(0 0 18px #00ff00);
+    animation:pulse 1.2s infinite;
+
+}
+
+@keyframes pulse{
+
+0%{transform:scale(.92);}
+50%{transform:scale(1.05);}
+100%{transform:scale(.92);}
+
+}
+
+#titulo{
+
+    margin-top:30px;
+    font-family:Consolas;
+    color:#00ff00;
+    font-size:46px;
+    letter-spacing:5px;
+    text-shadow:
+    0 0 8px #00ff00,
+    0 0 18px #00ff00,
+    0 0 35px #00ff00;
+    z-index:10;
+
+}
+
+#sub{
+
+    margin-top:20px;
+    color:#7cff7c;
+    font-family:Consolas;
+    font-size:20px;
+    z-index:10;
+
+}
+
+.progress{
+
+    margin-top:35px;
+    width:430px;
+    height:16px;
+    border:2px solid #00ff00;
+    overflow:hidden;
+    z-index:10;
+
+}
+
+.bar{
+
+    width:0%;
+    height:100%;
+    background:#00ff00;
+    box-shadow:0 0 20px #00ff00;
+    animation:load 2.5s linear forwards;
+
+}
+
+@keyframes load{
+
+from{width:0;}
+to{width:100%;}
+
+}
+
+</style>
+
+</head>
+
+<body>
+
+<div class="card">
+
+<h1>Generador de Reportes SPC</h1>
+
+<button id="btnReporte">
+
+📄 GENERAR REPORTE
+
+</button>
+
+</div>
+
+
+<div id="spinner">
+
+<pre id="matrix"></pre>
+
+<div id="icono">
+
+💻⚙
+
+</div>
+
+<div id="titulo">
+
+CALCULANDO REPORTE
+
+</div>
+
+<div id="sub">
+
+Espere mientras se genera el reporte...
+
+</div>
+
+<div class="progress">
+
+<div class="bar"></div>
+
+</div>
+
+</div>
+
+
+<script>
+
+const boton=document.getElementById("btnReporte");
+const spinner=document.getElementById("spinner");
+const matrix=document.getElementById("matrix");
+
+
+function generarMatrix(){
+
+    let texto="";
+
+    for(let i=0;i<160;i++){
+
+        for(let j=0;j<85;j++){
+
+            texto += Math.random()>0.5 ? "1":"0";
+
+        }
+
+        texto+="\n";
+
+    }
+
+    matrix.textContent=texto;
+
+}
+
+setInterval(generarMatrix,90);
+
+generarMatrix();
+
+
+boton.onclick=async()=>{
+
+    boton.disabled=true;
+
+    spinner.style.display="flex";
+
+    await new Promise(resolve=>setTimeout(resolve,2500));
+
+    window.open("/SPCPDF/10433939/TPE10","_blank");
+
+    spinner.style.display="none";
+
+    boton.disabled=false;
+
+}
+
+</script>
+
+</body>
+
+</html>
