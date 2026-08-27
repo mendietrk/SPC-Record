@@ -3042,7 +3042,7 @@ pagina.drawText(hora, {
 });
 
 router.get("/10433939-TPE10", (req, res) => {
-    res.render("10433939-TPE10");
+    res.send("El material usado en la máquina 10 no es original, o el % de remolido es alto, favor de medir SPC de manera convencional.");
 });
   
 
