@@ -3042,7 +3042,7 @@ pagina.drawText(hora, {
 });
 
 router.get("/10433939-TPE10", (req, res) => {
-    res.send("10433939-TPE10");
+    res.render("10433939-TPE10");
 });
   
 
