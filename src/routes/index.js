@@ -2950,31 +2950,33 @@ router.put('/actividades/:id', async (req, res) => {
     }
   });
 
-
-
-
+// Carpeta pública donde están los 60 PDFs
+const BASE_URL = "https://mendietr.com/";
+const TOTAL_ARCHIVOS = 60;
 const { PDFDocument, StandardFonts, rgb } = require("pdf-lib");
-
 let consecutivo = 1;
 
-router.get("/SPCPDF/10433939/TPE10", async (req,res)=>{
+router.get("/SPCPDF/10433939/TPE10", async (req, res) => {
 
-    try{
+    try {
 
-        const numero = String(consecutivo).padStart(2,"0");
+        const numero = String(consecutivo).padStart(2, "0");
 
         consecutivo++;
+        if (consecutivo > TOTAL_ARCHIVOS)
+            consecutivo = 1;
 
-        if(consecutivo>28)
-            consecutivo=1;
+        const nombreArchivo = `10433939 TPE10 ${numero}.pdf`;
 
-        const archivo = path.join(
-            __dirname,
-            "../public/reportes",
-            `10433939 TPE10 ${numero}.pdf`
-        );
+        // encodeURIComponent convierte los espacios en %20
+        const url = BASE_URL + encodeURIComponent(nombreArchivo);
 
-        const pdfBytes = fs.readFileSync(archivo);
+        const resp = await fetch(url);
+
+        if (!resp.ok)
+            throw new Error(`No se pudo descargar ${url} (HTTP ${resp.status})`);
+
+        const pdfBytes = await resp.arrayBuffer();
 
         const pdfDoc = await PDFDocument.load(pdfBytes);
 
