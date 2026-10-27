@@ -3006,7 +3006,7 @@ const hora = ahora.toLocaleTimeString("es-MX", {
 pagina.drawText(fecha, {
 
     x: 280,
-    y: 500,
+    y: 540,
     size: 7.5,
     font: fuente,
     color: rgb(0, 0, 0)
@@ -3017,7 +3017,7 @@ pagina.drawText(fecha, {
 pagina.drawText(hora, {
 
     x: 280,
-    y: 490,
+    y: 530,
     size: 7.5,
     font: fuente,
     color: rgb(0, 0, 0)
